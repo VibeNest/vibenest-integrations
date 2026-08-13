@@ -6,6 +6,12 @@
 **/bin/
 **/node_modules/
 **/obj/
+**/vendor/
+**/bootstrap/cache/*.php
+**/__pycache__/
+**/.pytest_cache/
+**/.phpunit.cache/
+**/tmp/
 **/*.user
 **/*.suo
 *.log

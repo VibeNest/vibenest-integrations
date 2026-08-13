@@ -30,3 +30,33 @@ updates:
     groups:
       dotnet-per-example:
         patterns: ["*"]
+  - package-ecosystem: pip
+    directories:
+      - /auth/fastapi
+      - /payments/fastapi
+      - /auth-and-payments/fastapi
+    schedule:
+      interval: weekly
+    groups:
+      python-per-example:
+        patterns: ["*"]
+  - package-ecosystem: composer
+    directories:
+      - /auth/laravel
+      - /payments/laravel
+      - /auth-and-payments/laravel
+    schedule:
+      interval: weekly
+    groups:
+      php-per-example:
+        patterns: ["*"]
+  - package-ecosystem: bundler
+    directories:
+      - /auth/rails
+      - /payments/rails
+      - /auth-and-payments/rails
+    schedule:
+      interval: weekly
+    groups:
+      ruby-per-example:
+        patterns: ["*"]

@@ -84,6 +84,101 @@ jobs:
           if [ -f auth-tests/AuthFlowTests.csproj ]; then dotnet test auth-tests/AuthFlowTests.csproj -c Release --no-restore; fi
       - run: dotnet list package --vulnerable --include-transitive
 
+  python-examples:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        example:
+          - auth/fastapi
+          - payments/fastapi
+          - auth-and-payments/fastapi
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+          cache: pip
+          cache-dependency-path: ${{ matrix.example }}/requirements.lock
+      - name: Install locked dependencies
+        run: pip install -r ${{ matrix.example }}/requirements.lock
+      - name: Test and compile
+        shell: bash
+        run: |
+          export PYTHONPATH="$GITHUB_WORKSPACE:$GITHUB_WORKSPACE/${{ matrix.example }}:$GITHUB_WORKSPACE/auth/fastapi/app:$GITHUB_WORKSPACE/payments/fastapi/app"
+          cd "${{ matrix.example }}"
+          pytest -q
+          python -m compileall -q app tests
+      - run: pip check
+      - name: Audit locked dependencies
+        run: |
+          pip install pip-audit==2.10.1
+          pip-audit -r ${{ matrix.example }}/requirements.lock
+
+  php-examples:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        example:
+          - auth/laravel
+          - payments/laravel
+          - auth-and-payments/laravel
+    steps:
+      - uses: actions/checkout@v7
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.4"
+          extensions: curl, dom, intl, mbstring, openssl, pdo_sqlite, sqlite3
+          coverage: none
+      - name: Install locked dependencies
+        working-directory: ${{ matrix.example }}
+        run: composer install --no-interaction --no-progress --prefer-dist
+      - name: Test and list routes
+        working-directory: ${{ matrix.example }}
+        env:
+          APP_KEY: base64:bqEtUVqMIbJ4KI0cO1qSGnCmuEr4BuVze0gdM/CNjJM=
+          VIBENEST_AUTH_ISSUER: https://vibenest.net/
+          VIBENEST_AUTH_CLIENT_ID: ci-client
+          VIBENEST_AUTH_REDIRECT_URI: https://reference.example/auth/vibenest/callback
+          VIBENEST_PROJECT_PAYMENTS_ENABLED: "false"
+          VIBENEST_PROJECT_PAYMENTS_PROVIDER: simulator
+        run: |
+          composer test
+          php artisan route:list
+      - name: Audit locked dependencies
+        working-directory: ${{ matrix.example }}
+        run: composer audit --locked
+
+  ruby-examples:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        example:
+          - auth/rails
+          - payments/rails
+          - auth-and-payments/rails
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "4.0"
+          bundler-cache: true
+          working-directory: ${{ matrix.example }}
+      - name: Test and list routes
+        working-directory: ${{ matrix.example }}
+        env:
+          SECRET_KEY_BASE: ci-secret-key-base-placeholder-value-which-is-long-enough
+          VIBENEST_PROJECT_PAYMENTS_ENABLED: "false"
+          VIBENEST_PROJECT_PAYMENTS_PROVIDER: simulator
+        run: |
+          bundle exec rails test
+          bundle exec rails routes
+      - name: Audit locked dependencies
+        working-directory: ${{ matrix.example }}
+        run: bundle exec bundle-audit check --update
+
   secret-scan:
     runs-on: ubuntu-latest
     steps:

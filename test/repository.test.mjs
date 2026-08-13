@@ -21,3 +21,13 @@ test("security policy forbids secrets and live money movement", async () => {
   assert.match(policy, /Never commit/i);
   assert.match(policy, /do not perform charges/i);
 });
+
+test("root compatibility matrix includes the three additional ecosystems", async () => {
+  const readme = await readFile(
+    new URL("../README.md", import.meta.url),
+    "utf8",
+  );
+  for (const stack of ["FastAPI", "Laravel", "Rails"]) {
+    assert.match(readme, new RegExp(`\\| ${stack}`));
+  }
+});

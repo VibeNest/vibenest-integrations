@@ -1,0 +1,7 @@
+FROM python:3.14-slim
+WORKDIR /repo
+COPY . .
+RUN pip install --no-cache-dir -r auth-and-payments/fastapi/requirements.lock
+ENV PYTHONPATH=/repo/auth/fastapi:/repo/payments/fastapi
+WORKDIR /repo/auth-and-payments/fastapi
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080", "--proxy-headers", "--forwarded-allow-ips", "127.0.0.1"]

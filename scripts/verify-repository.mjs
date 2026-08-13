@@ -6,7 +6,14 @@ const rootPath = decodeURIComponent(root.pathname).replace(
   /^\/(?:([A-Za-z]):)/,
   "$1:",
 );
-const stacks = ["nextjs", "express", "aspnet-core"];
+const stacks = [
+  "nextjs",
+  "express",
+  "aspnet-core",
+  "fastapi",
+  "laravel",
+  "rails",
+];
 const families = ["auth", "payments", "auth-and-payments"];
 const upstreamCommit = "39279c3190ac59f08354e1950ee32d59be4dd9a6";
 const routes = {
@@ -35,6 +42,24 @@ const routes = {
       "/api/project-payments/portal",
       "/webhooks/project-payments",
     ],
+    fastapi: [
+      "/api/project-payments/prices",
+      "/api/project-payments/checkout",
+      "/api/project-payments/portal",
+      "/webhooks/project-payments",
+    ],
+    laravel: [
+      "/api/project-payments/prices",
+      "/api/project-payments/checkout",
+      "/api/project-payments/portal",
+      "/webhooks/project-payments",
+    ],
+    rails: [
+      "/api/project-payments/prices",
+      "/api/project-payments/checkout",
+      "/api/project-payments/portal",
+      "/webhooks/project-payments",
+    ],
   },
 };
 
@@ -48,8 +73,14 @@ for (const family of families) {
     }
     const files = walk(directory);
     if (
-      !files.some(
-        (file) => file === "package-lock.json" || file === "packages.lock.json",
+      !files.some((file) =>
+        [
+          "package-lock.json",
+          "packages.lock.json",
+          "requirements.lock",
+          "composer.lock",
+          "Gemfile.lock",
+        ].includes(file),
       )
     ) {
       throw new Error(`${family}/${stack} is missing a lock file`);
@@ -71,6 +102,7 @@ for (const family of families) {
         "false",
         "simulator",
         "loopback",
+        "file",
         "3000",
         "8080",
       ];
@@ -87,7 +119,7 @@ for (const family of families) {
     const source = files
       .filter(
         (file) =>
-          /\.(?:cs|js|mjs)$/.test(file) &&
+          /\.(?:cs|js|mjs|py|php|rb)$/.test(file) &&
           !file.startsWith("test") &&
           !file.includes("-tests/"),
       )
@@ -95,7 +127,7 @@ for (const family of families) {
       .join("\n");
     const referencedEnvironment = new Set(
       source.match(
-        /\b(?:VIBENEST_[A-Z0-9_]+|APP_SESSION_SECRET|TRUSTED_PROXY_CIDR|PROJECT_PAYMENT_[A-Z0-9_]+|SOURCE_COMMIT|PORT)\b/g,
+        /\b(?:VIBENEST_[A-Z0-9_]+|APP_SESSION_SECRET|SECRET_KEY_BASE|SESSION_DRIVER|SESSION_SECURE_COOKIE|TRUSTED_PROXY_CIDR|PROJECT_PAYMENT_[A-Z0-9_]+|SOURCE_COMMIT|PORT)\b/g,
       ) ?? [],
     );
     referencedEnvironment.delete("VIBENEST_FIXTURE_AUTH_ENABLED");
@@ -136,7 +168,10 @@ for (const forbidden of [
 }
 
 const authSource = authFiles
-  .filter((file) => /\.(?:cs|js|mjs)$/.test(file) && !file.startsWith("test"))
+  .filter(
+    (file) =>
+      /\.(?:cs|js|mjs|py|php|rb)$/.test(file) && !file.startsWith("test"),
+  )
   .map((file) => readFileSync(join(rootPath, "auth", file), "utf8"))
   .join("\n");
 if (
@@ -159,7 +194,21 @@ console.log(
 
 function walk(directory, base = directory) {
   return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
-    if (["node_modules", ".next", "bin", "obj"].includes(entry.name)) return [];
+    if (
+      [
+        "node_modules",
+        "vendor",
+        ".venv",
+        "__pycache__",
+        ".pytest_cache",
+        ".phpunit.cache",
+        ".next",
+        "bin",
+        "obj",
+        "tmp",
+      ].includes(entry.name)
+    )
+      return [];
     const path = join(directory, entry.name);
     return entry.isDirectory()
       ? walk(path, base)
