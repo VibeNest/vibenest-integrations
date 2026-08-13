@@ -105,7 +105,7 @@ jobs:
       - name: Test and compile
         shell: bash
         run: |
-          export PYTHONPATH="$GITHUB_WORKSPACE:$GITHUB_WORKSPACE/auth/fastapi/app:$GITHUB_WORKSPACE/payments/fastapi/app"
+          export PYTHONPATH="$GITHUB_WORKSPACE:$GITHUB_WORKSPACE/${{ matrix.example }}:$GITHUB_WORKSPACE/auth/fastapi/app:$GITHUB_WORKSPACE/payments/fastapi/app"
           cd "${{ matrix.example }}"
           pytest -q
           python -m compileall -q app tests
