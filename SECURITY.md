@@ -14,8 +14,11 @@ session cookies, webhook signatures, personal data, or production payloads.
   key; email is optional metadata.
 - The Payments examples are simulator previews. They do not perform charges,
   payouts, refunds, live checkout, or production deployment.
-- `.env.example` files contain placeholders only. Never commit copied Project
-  Settings values, Project Payments install codes, one-time grants, access
+- Secret-shaped values in `.env.example` files are intentionally empty. Runtime
+  applications must fail closed when a required application/session key is
+  missing; generate those values outside Git and inject them through the
+  deployment secret store. Never commit copied Project Settings values,
+  Project Payments install codes, one-time grants, access
   tokens, refresh tokens, provider keys, or webhook secrets.
 - Production applications must replace demo in-memory or local-file stores
   where each example README says so, persist session/data-protection keys, and
