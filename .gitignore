@@ -1,0 +1,11 @@
+.DS_Store
+.idea/
+.vscode/
+**/.data/
+**/.next/
+**/bin/
+**/node_modules/
+**/obj/
+**/*.user
+**/*.suo
+*.log
