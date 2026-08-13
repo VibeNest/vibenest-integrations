@@ -1,0 +1,26 @@
+{
+  "name": "vibenest-auth-nextjs-reference",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test": "node --conditions=react-server --test test/auth.test.mjs",
+    "format:check": "prettier --check app lib test README.md next.config.mjs package.json"
+  },
+  "dependencies": {
+    "next": "16.3.0",
+    "openid-client": "6.8.5",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "server-only": "0.0.1"
+  },
+  "devDependencies": {
+    "prettier": "3.6.2"
+  }
+}

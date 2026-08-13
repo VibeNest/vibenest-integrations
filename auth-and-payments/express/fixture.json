@@ -1,0 +1,34 @@
+{
+  "name": "node-express",
+  "framework": "node-express",
+  "classification": "Reference",
+  "previewAllowed": true,
+  "productionCodeDeployAllowed": true,
+  "requiresExactSha": true,
+  "manifestPath": ".vibenest/payments.yaml",
+  "previewProvider": "simulator",
+  "productionProvider": "disabled",
+  "productionPaymentsEnabled": false,
+  "previewRuntimeContract": {
+    "builtCommit": "SOURCE_COMMIT",
+    "environmentId": "VIBENEST_PROJECT_PAYMENTS_ENVIRONMENT_ID",
+    "catalogProjection": "VIBENEST_PROJECT_PAYMENTS_CATALOG_B64",
+    "manifestDigest": "VIBENEST_PROJECT_PAYMENTS_MANIFEST_DIGEST"
+  },
+  "fixtureOnlyAuthentication": {
+    "kind": "header-shim",
+    "header": "X-Fixture-Authenticated-Buyer",
+    "replaceWith": "server-side session identity resolver"
+  },
+  "requiredSimulatorScenarios": [
+    "OneTimePurchase",
+    "SubscriptionPurchase",
+    "DeclinedCheckout",
+    "Renewal",
+    "ScheduledCancellation",
+    "ImmediateCancellationAndRefund",
+    "DuplicateDelivery",
+    "OutOfOrderDelivery",
+    "CustomerPortal"
+  ]
+}

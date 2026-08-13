@@ -1,0 +1,23 @@
+{
+  "name": "nextjs-app-router",
+  "framework": "nextjs-app-router",
+  "classification": "Reference",
+  "previewAllowed": true,
+  "productionCodeDeployAllowed": true,
+  "requiresExactSha": true,
+  "manifestPath": ".vibenest/payments.yaml",
+  "previewProvider": "simulator",
+  "productionProvider": "disabled",
+  "productionPaymentsEnabled": false,
+  "requiredSimulatorScenarios": [
+    "OneTimePurchase",
+    "SubscriptionPurchase",
+    "DeclinedCheckout",
+    "Renewal",
+    "ScheduledCancellation",
+    "ImmediateCancellationAndRefund",
+    "DuplicateDelivery",
+    "OutOfOrderDelivery",
+    "CustomerPortal"
+  ]
+}

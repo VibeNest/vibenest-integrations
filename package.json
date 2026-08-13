@@ -1,0 +1,17 @@
+{
+  "name": "vibenest-integrations",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "format:check": "prettier --check README.md SECURITY.md CONTRIBUTING.md SOURCE_PROVENANCE.md scripts test .github",
+    "test": "node --test test/repository.test.mjs && node scripts/verify-repository.mjs",
+    "audit": "npm audit --audit-level=high"
+  },
+  "devDependencies": {
+    "prettier": "3.6.2"
+  }
+}

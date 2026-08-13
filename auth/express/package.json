@@ -1,0 +1,24 @@
+{
+  "name": "vibenest-auth-express-reference",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "dev": "node --watch src/server.mjs",
+    "start": "node src/server.mjs",
+    "build": "node --check src/server.mjs && node --check src/vibenest-auth.mjs",
+    "test": "node --test test/auth.test.mjs",
+    "format:check": "prettier --check src test README.md package.json"
+  },
+  "dependencies": {
+    "express": "5.2.1",
+    "express-session": "1.19.0",
+    "openid-client": "6.8.5"
+  },
+  "devDependencies": {
+    "prettier": "3.6.2"
+  }
+}

@@ -1,0 +1,30 @@
+apiVersion: vibenest.net/project-payments/v1alpha1
+kind: ProjectPayments
+project:
+  key: adapter-fixture
+products:
+  - key: pro
+    name: Pro
+    description: Reference adapter access
+    prices:
+      - key: monthly
+        currency: USD
+        unitAmount: 1500
+        type: recurring
+        interval: month
+      - key: lifetime
+        currency: USD
+        unitAmount: 9900
+        type: one_time
+    grants:
+      - entitlement: premium-access
+        quantity: 1
+buyer:
+  identity: user_id
+checkout:
+  successPath: /billing/success
+  cancelPath: /pricing
+portal:
+  enabled: true
+refunds:
+  windowDays: 14
