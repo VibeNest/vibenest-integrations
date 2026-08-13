@@ -1,0 +1,1 @@
+CREATE TABLE customer_subjects(customer_id TEXT PRIMARY KEY, subject TEXT NOT NULL UNIQUE); CREATE TABLE webhook_inbox(event_id TEXT PRIMARY KEY, body_digest TEXT NOT NULL); CREATE TABLE entitlements(subject TEXT NOT NULL, entitlement TEXT NOT NULL, quantity INTEGER NOT NULL, PRIMARY KEY(subject, entitlement));

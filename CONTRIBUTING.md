@@ -16,6 +16,7 @@ Do not auto-merge dependency updates that change OIDC validation, session
 handling, webhook verification, durable inbox behavior, catalog parsing, or
 entitlement aggregation. Those changes require the full fixture test suite.
 
-Roadmap proposals for FastAPI, Laravel, Rails, and other stacks are welcome as
-issues. Please do not add an unverified implementation merely to expand the
-matrix.
+Proposals for additional stacks are welcome as issues. Do not add an
+implementation merely to expand the matrix: every new adapter must carry the
+same deterministic Auth and Payments security-invariant tests, a generated
+lock file, and an independent CI job.

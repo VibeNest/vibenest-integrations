@@ -1,0 +1,18 @@
+{
+  "name": "vibenest/auth-laravel-reference",
+  "description": "Runnable VibeNest Auth reference for Laravel",
+  "license": "MIT",
+  "type": "project",
+  "require": {
+    "php": "^8.4",
+    "firebase/php-jwt": "^7.1",
+    "laravel/framework": "^13.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^13.3"
+  },
+  "autoload": {"psr-4": {"App\\": "app/"}},
+  "autoload-dev": {"psr-4": {"Tests\\": "tests/"}},
+  "scripts": {"test": "phpunit"},
+  "config": {"sort-packages": true, "allow-plugins": {"php-http/discovery": false}}
+}

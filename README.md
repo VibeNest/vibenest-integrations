@@ -10,11 +10,11 @@ Official resources: [Project Payments](https://vibenest.net/project-payments),
 
 ## Choose a reference
 
-| Need                        | Next.js App Router                                     | Express                                                  | ASP.NET Core                                                     | Status                                             |
-| --------------------------- | ------------------------------------------------------ | -------------------------------------------------------- | ---------------------------------------------------------------- | -------------------------------------------------- |
-| Auth only                   | [`auth/nextjs`](auth/nextjs)                           | [`auth/express`](auth/express)                           | [`auth/aspnet-core`](auth/aspnet-core)                           | Production-ready Auth                              |
-| Payments with existing auth | [`payments/nextjs`](payments/nextjs)                   | [`payments/express`](payments/express)                   | [`payments/aspnet-core`](payments/aspnet-core)                   | Payments simulator preview                         |
-| Auth and Payments           | [`auth-and-payments/nextjs`](auth-and-payments/nextjs) | [`auth-and-payments/express`](auth-and-payments/express) | [`auth-and-payments/aspnet-core`](auth-and-payments/aspnet-core) | Production-ready Auth + Payments simulator preview |
+| Need                        | Next.js App Router                                     | Express                                                  | ASP.NET Core                                                     | FastAPI                                                  | Laravel                                                  | Rails                                                | Status                                             |
+| --------------------------- | ------------------------------------------------------ | -------------------------------------------------------- | ---------------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | ---------------------------------------------------- | -------------------------------------------------- |
+| Auth only                   | [`auth/nextjs`](auth/nextjs)                           | [`auth/express`](auth/express)                           | [`auth/aspnet-core`](auth/aspnet-core)                           | [`auth/fastapi`](auth/fastapi)                           | [`auth/laravel`](auth/laravel)                           | [`auth/rails`](auth/rails)                           | Production-ready Auth                              |
+| Payments with existing auth | [`payments/nextjs`](payments/nextjs)                   | [`payments/express`](payments/express)                   | [`payments/aspnet-core`](payments/aspnet-core)                   | [`payments/fastapi`](payments/fastapi)                   | [`payments/laravel`](payments/laravel)                   | [`payments/rails`](payments/rails)                   | Payments simulator preview                         |
+| Auth and Payments           | [`auth-and-payments/nextjs`](auth-and-payments/nextjs) | [`auth-and-payments/express`](auth-and-payments/express) | [`auth-and-payments/aspnet-core`](auth-and-payments/aspnet-core) | [`auth-and-payments/fastapi`](auth-and-payments/fastapi) | [`auth-and-payments/laravel`](auth-and-payments/laravel) | [`auth-and-payments/rails`](auth-and-payments/rails) | Production-ready Auth + Payments simulator preview |
 
 Project Payments is deliberately simulator-only here. No example performs a
 real charge or deploys a live payment configuration. An existing Stripe,
@@ -79,8 +79,9 @@ Source provenance and immutable contract versions are recorded in
 [`SOURCE_PROVENANCE.md`](SOURCE_PROVENANCE.md). See
 [`SECURITY.md`](SECURITY.md) before adapting a reference.
 
-## Roadmap
+## Stack coverage
 
-FastAPI, Laravel, and Rails are intentionally not included in v1. Track them as
-issues until a production-verified implementation and deterministic security
-fixture exist.
+The repository now covers JavaScript/TypeScript, .NET, Python, PHP, and Ruby
+applications through six deliberately small framework references. Each stack
+keeps the same security and consent boundaries while using its native session,
+routing, package-lock, and test conventions.
