@@ -1,0 +1,32 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      root-tooling:
+        patterns: ["*"]
+  - package-ecosystem: npm
+    directories:
+      - /auth/nextjs
+      - /auth/express
+      - /payments/nextjs
+      - /payments/express
+      - /auth-and-payments/nextjs
+      - /auth-and-payments/express
+    schedule:
+      interval: weekly
+    groups:
+      runtime-per-example:
+        patterns: ["*"]
+  - package-ecosystem: nuget
+    directories:
+      - /auth/aspnet-core
+      - /payments/aspnet-core
+      - /auth-and-payments/aspnet-core
+    schedule:
+      interval: weekly
+    groups:
+      dotnet-per-example:
+        patterns: ["*"]

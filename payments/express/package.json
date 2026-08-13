@@ -1,0 +1,17 @@
+{
+  "name": "vibenest-project-payments-node-express-fixture",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "start": "node src/server.mjs",
+    "build": "node --check src/server.mjs && node --check src/project-payments.mjs",
+    "test": "node --test test/project-payments.test.mjs"
+  },
+  "dependencies": {
+    "express": "5.1.0"
+  }
+}

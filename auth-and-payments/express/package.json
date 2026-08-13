@@ -1,0 +1,19 @@
+{
+  "name": "vibenest-project-payments-node-express-fixture",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "start": "node src/server.mjs",
+    "build": "node --check src/server.mjs && node --check src/project-payments.mjs && node --check src/vibenest-auth.mjs",
+    "test": "node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "express": "5.1.0",
+    "express-session": "1.19.0",
+    "openid-client": "6.8.5"
+  }
+}

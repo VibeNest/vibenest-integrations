@@ -1,0 +1,8 @@
+bin/
+obj/
+.data/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+tests/bin/
+tests/obj/
