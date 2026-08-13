@@ -6,7 +6,7 @@ module VibeNestCombinedReference
   class Application < Rails::Application
     config.load_defaults 8.1
     config.eager_load = ENV.fetch("RAILS_ENV", "development") == "production"
-    config.secret_key_base = ENV.fetch("SECRET_KEY_BASE", "test-secret-key-base-" + "x" * 64)
+    config.secret_key_base = ENV.fetch("SECRET_KEY_BASE")
     config.session_store :cookie_store, key: "vibenest_app_session", secure: true, httponly: true, same_site: :lax
     config.autoload_paths << Rails.root.join("../../auth/rails/app/services")
     config.autoload_paths << Rails.root.join("../../payments/rails/app/services")

@@ -31,3 +31,45 @@ test("root compatibility matrix includes the three additional ecosystems", async
     assert.match(readme, new RegExp(`\\| ${stack}`));
   }
 });
+
+test("real env files are ignored while examples remain trackable", async () => {
+  const ignore = await readFile(
+    new URL("../.gitignore", import.meta.url),
+    "utf8",
+  );
+  assert.match(ignore, /^\*\*\/\.env$/m);
+  assert.match(ignore, /^\*\*\/\.env\.\*$/m);
+  assert.match(ignore, /^!\*\*\/\.env\.example$/m);
+});
+
+test("example secret values are empty and Rails has no runtime fallback", async () => {
+  const families = ["auth", "payments", "auth-and-payments"];
+  const stacks = [
+    "nextjs",
+    "express",
+    "aspnet-core",
+    "fastapi",
+    "laravel",
+    "rails",
+  ];
+  for (const family of families) {
+    for (const stack of stacks) {
+      const env = await readFile(
+        new URL(`../${family}/${stack}/.env.example`, import.meta.url),
+        "utf8",
+      );
+      for (const line of env.split(/\r?\n/)) {
+        if (/^(?:.*SECRET.*|APP_KEY)=/.test(line)) assert.match(line, /=$/);
+      }
+    }
+  }
+
+  for (const family of families) {
+    const application = await readFile(
+      new URL(`../${family}/rails/config/application.rb`, import.meta.url),
+      "utf8",
+    );
+    assert.match(application, /ENV\.fetch\("SECRET_KEY_BASE"\)/);
+    assert.doesNotMatch(application, /test-(?:only-)?secret-key-base/);
+  }
+});
