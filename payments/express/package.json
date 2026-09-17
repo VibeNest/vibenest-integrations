@@ -12,6 +12,6 @@
     "test": "node --test test/project-payments.test.mjs"
   },
   "dependencies": {
-    "express": "5.1.0"
+    "express": "5.2.1"
   }
 }
